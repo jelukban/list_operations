@@ -1,5 +1,6 @@
 """Custom implementations of several standard Python list methods."""
 
+from unittest import result
 from list_operations import *
 
 
@@ -67,6 +68,8 @@ def custom_extend(input_list, second_list):
 
     """
 
+    for item in second_list:
+        custom_append(input_list, item)
     pass
 
 
@@ -84,7 +87,7 @@ def custom_insert(input_list, index, value):
         True
 
     """
-
+    input_list[index:index] = [value]
     pass
 
 
@@ -103,6 +106,11 @@ def custom_remove(input_list, value):
         True
 
     """
+
+    for i, item in enumerate(input_list):
+        if item == value:
+            del input_list[i]
+            break
 
     pass
 
@@ -123,7 +131,9 @@ def custom_pop(input_list):
 
     """
 
-    return None
+    last_item = input_list[-1]
+    del input_list[-1]
+    return last_item
 
 
 def custom_index(input_list, value):
@@ -139,7 +149,11 @@ def custom_index(input_list, value):
 
     """
 
-    return 0
+    for i, item in enumerate(input_list):
+        if item == value:
+            index_of_value = i
+            break
+    return index_of_value
 
 
 def custom_count(input_list, value):
@@ -154,8 +168,12 @@ def custom_count(input_list, value):
         2
 
     """
+    count = 0
 
-    return 0
+    for item in input_list:
+        if item == value:
+            count += 1
+    return count
 
 
 def custom_reverse(input_list):
@@ -173,7 +191,7 @@ def custom_reverse(input_list):
         True
 
     """
-
+    input_list[0:] = input_list[::-1]
     pass
 
 
@@ -193,8 +211,13 @@ def custom_contains(input_list, value):
         True
 
     """
+    result = False
 
-    return None
+    for item in input_list:
+        if item == value:
+            result = True
+            break
+    return result
 
 
 def custom_equality(some_list, another_list):
@@ -213,4 +236,13 @@ def custom_equality(some_list, another_list):
 
     """
 
-    return None
+    result = True
+
+    if custom_len(some_list) != custom_len(another_list):
+        result = False
+    else:
+        for i in range(custom_len(some_list)):
+            if some_list[i] != another_list[i]:
+                result = False
+                break
+    return result
